@@ -1,0 +1,14 @@
+<div class="form-group"
+     ng-controller="sfObibaUiSelectController"
+     ng-class="{'has-error': form.disableErrorState !== true && hasError(), 'has-success': form.disableSuccessState !== true && hasSuccess(), 'has-feedback': form.feedback !== false }"
+     schema-validate="form" sf-field-model >
+  <!--<pre>{{form|json}}</pre>-->
+  <label class="control-label" ng-show="showTitle()">{{form.title}}</label>
+  <ui-select multiple="multiple" theme="bootstrap" sf-field-model ng-model="$$value$$" reset-search-input="true">
+    <ui-select-match><span ng-bind-html="$item[form.autoComplete.label]"></span></ui-select-match>
+    <ui-select-choices repeat="item[form.autoComplete.value] as item in form.items | filter: $select.search">
+      {{formatList(item)}}
+    </ui-select-choices>
+  </ui-select>
+  <span class="help-block" sf-message="form.description"></span>
+</div>

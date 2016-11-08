@@ -1,0 +1,153 @@
+<html>
+  <head>
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="../bower_components/tv4/tv4.js"></script>
+    <script src="../bower_components/objectpath/lib/ObjectPath.js"></script>
+    <script src="../bower_components/angular-schema-form/dist/schema-form.js"></script>
+    <script src="../bower_components/angular-schema-form-bootstrap/bootstrap-decorator.js"></script>
+    <script src="../bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="../bower_components/ui-select/dist/select.js"></script>
+    <script src="../dist/sf-obiba-ui-select.js"></script>
+
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bower_components/ui-select/dist/select.css">
+    <link rel="stylesheet" href="main.css">
+
+    <script>
+      angular.module('test', ["schemaForm","sfObibaUiSelect" ,"ui.bootstrap"]).controller('FormController', function($scope) {
+
+        $scope.schema1 = {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "array",
+              "format": "obibaUiSelect",
+              "title": "Name",
+              "description": "Name or alias"
+            }
+          }
+        };
+
+        $scope.form1 = [
+          {
+            "type":"obibaUiSelect",
+            "key":"name"
+          }
+        ];
+
+        $scope.model1 = {};
+
+        $scope.sfOptions1 = {
+          formDefaults: {
+            items: [
+              {'value': 'AND', 'label': 'Andorra'},
+              {'value': 'ARE', 'label': 'United Arab Emirates'},
+              {'value': 'AFG', 'label': 'Afghanistan'},
+              {'value': 'ATG', 'label': 'Antigua and Barbuda'},
+              {'value': 'AIA', 'label': 'Anguilla'},
+              {'value': 'ALB', 'label': 'Albania'},
+              {'value': 'ARM', 'label': 'Armenia'},
+              {'value': 'AGO', 'label': 'Angola'},
+              {'value': 'ATA', 'label': 'Antarctica'},
+              {'value': 'ARG', 'label': 'Argentina'}
+            ]
+          }
+        };
+
+        $scope.schema2 = {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "array",
+              "format": "obibaUiSelect",
+              "title": "Name",
+              "description": "Name or alias"
+            }
+          }
+        };
+
+        $scope.form2 = [
+          {
+            "type":"obibaUiSelect",
+            "key":"name",
+            "autoComplete": {
+              format: ':label [:value]',
+              value: 'code',
+              label: 'name'
+            }
+          }
+        ];
+
+        $scope.model2 = {};
+
+        $scope.sfOptions2 = {
+          formDefaults: {
+            items: [
+              {'code': 'AND', 'name': 'Andorra'},
+              {'code': 'ARE', 'name': 'United Arab Emirates'},
+              {'code': 'AFG', 'name': 'Afghanistan'},
+              {'code': 'ATG', 'name': 'Antigua and Barbuda'},
+              {'code': 'AIA', 'name': 'Anguilla'},
+              {'code': 'ALB', 'name': 'Albania'},
+              {'code': 'ARM', 'name': 'Armenia'},
+              {'code': 'AGO', 'name': 'Angola'},
+              {'code': 'ATA', 'name': 'Antarctica'},
+              {'code': 'ARG', 'name': 'Argentina'}
+            ]
+          }
+        };
+
+        $scope.debug1 = {schema: angular.copy($scope.schema1), form: angular.copy($scope.form1)};
+        $scope.debug2 = {schema: angular.copy($scope.schema2), form: angular.copy($scope.form2)};
+      });
+
+    </script>
+    <title>Testing sf-obiba-ui-select addon</title>
+  </head>
+
+  <body ng-app="test">
+    <div class="container-fluid" ng-controller="FormController">
+      <div class="col-sm-12">
+        <h2>sf-obiba-ui-select</h2>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6 form">
+          <h3>Using Default Settings</h3>
+          <form sf-schema="schema1" sf-form="form1" sf-model="model1" sf-options="sfOptions1"></form>
+          <div>
+            <h4>Model</h4>
+            <pre>{{model1 | json}}</pre>
+          </div>
+          <div>
+            <h4>Schema</h4>
+            <pre>{{debug1.schema | json}}</pre>
+          </div>
+          <div>
+            <h4>Form</h4>
+            <pre>{{debug1.form | json}}</pre>
+          </div>
+        </div>
+        <div class="col-sm-6 form">
+          <h3>Using Custom Settings</h3>
+          <form sf-schema="schema2" sf-form="form2" sf-model="model2" sf-options="sfOptions2"></form>
+          <div>
+            <h4>Model</h4>
+            <pre>{{model2 | json}}</pre>
+          </div>
+          <div>
+            <h4>Schema</h4>
+            <pre>{{debug2.schema | json}}</pre>
+          </div>
+          <div>
+            <h4>Form</h4>
+            <pre>{{debug2.form | json}}</pre>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </body>
+
+</html>
