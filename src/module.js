@@ -1,6 +1,7 @@
 angular.module('sfObibaUiSelect', [
   'schemaForm',
   'ui.select',
+  'ngObiba',
   'sfObibaUiSelectTemplates'
 ]).config(['schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfBuilderProvider', 'sfPathProvider',
   function (schemaFormProvider, schemaFormDecoratorsProvider, sfBuilderProvider, sfPathProvider) {
@@ -42,19 +43,8 @@ angular.module('sfObibaUiSelect', [
       }
     }, true);
 
-    $scope.formatList = function(item) {
-      return $scope.form.autoComplete.format
-        .replace(':label', item[$scope.form.autoComplete.label])
-        .replace(':value', item[$scope.form.autoComplete.value]);
-    };
-
     $scope.$watch('form', function () {
       if ($scope.form) {
-        $scope.form.autoComplete = $scope.form.autoComplete || {
-            format: ':label (:value)',
-            label: 'label',
-            value: 'value'
-          };
         $scope.form.disableErrorState = $scope.form.hasOwnProperty('readonly') && $scope.form.readonly;
       }
     });

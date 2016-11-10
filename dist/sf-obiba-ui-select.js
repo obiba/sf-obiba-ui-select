@@ -1,7 +1,8 @@
-angular.module("sfObibaUiSelectTemplates", []).run(["$templateCache", function($templateCache) {$templateCache.put("src/templates/sf-obiba-ui-select.html","<div class=\"form-group\"\n     ng-controller=\"sfObibaUiSelectController\"\n     ng-class=\"{\'has-error\': form.disableErrorState !== true && hasError(), \'has-success\': form.disableSuccessState !== true && hasSuccess(), \'has-feedback\': form.feedback !== false }\"\n     schema-validate=\"form\" sf-field-model >\n  <!--<pre>{{form|json}}</pre>-->\n  <label class=\"control-label\" ng-show=\"showTitle()\">{{form.title}}</label>\n  <ui-select multiple=\"multiple\" theme=\"bootstrap\" sf-field-model ng-model=\"$$value$$\" reset-search-input=\"true\">\n    <ui-select-match><span ng-bind-html=\"$item[form.autoComplete.label]\"></span></ui-select-match>\n    <ui-select-choices repeat=\"item[form.autoComplete.value] as item in form.items | filter: $select.search\">\n      {{formatList(item)}}\n    </ui-select-choices>\n  </ui-select>\n  <span class=\"help-block\" sf-message=\"form.description\"></span>\n</div>\n");}]);
+angular.module("sfObibaUiSelectTemplates", []).run(["$templateCache", function($templateCache) {$templateCache.put("src/templates/sf-obiba-ui-select.html","<div ng-controller=\"sfObibaUiSelectController\" schema-validate=\"form\" sf-field-model>\n  <form-ui-select title=\"form.title\"\n                  show-title=\"!form.notitle\"\n                  items=\"form.items\"\n                  auto-complete=\"form.autoComplete\"\n                  sf-field-model=\"replaceAll\"\n                  model=\"$$value$$\"\n                  description=\"form.description\"></form-ui-select>\n</div>\n");}]);
 angular.module('sfObibaUiSelect', [
   'schemaForm',
   'ui.select',
+  'ngObiba',
   'sfObibaUiSelectTemplates'
 ]).config(['schemaFormProvider', 'schemaFormDecoratorsProvider', 'sfBuilderProvider', 'sfPathProvider',
   function (schemaFormProvider, schemaFormDecoratorsProvider, sfBuilderProvider, sfPathProvider) {
@@ -43,19 +44,8 @@ angular.module('sfObibaUiSelect', [
       }
     }, true);
 
-    $scope.formatList = function(item) {
-      return $scope.form.autoComplete.format
-        .replace(':label', item[$scope.form.autoComplete.label])
-        .replace(':value', item[$scope.form.autoComplete.value]);
-    };
-
     $scope.$watch('form', function () {
       if ($scope.form) {
-        $scope.form.autoComplete = $scope.form.autoComplete || {
-            format: ':label (:value)',
-            label: 'label',
-            value: 'value'
-          };
         $scope.form.disableErrorState = $scope.form.hasOwnProperty('readonly') && $scope.form.readonly;
       }
     });
