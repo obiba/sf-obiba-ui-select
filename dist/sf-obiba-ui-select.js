@@ -1,4 +1,4 @@
-angular.module("sfObibaUiSelectTemplates", []).run(["$templateCache", function($templateCache) {$templateCache.put("src/templates/sf-obiba-ui-select.html","<div ng-controller=\"sfObibaUiSelectController\" schema-validate=\"form\" sf-field-model>\n  <form-ui-select title=\"form.title\"\n                  show-title=\"!form.notitle\"\n                  items=\"form.items\"\n                  auto-complete=\"form.autoComplete\"\n                  sf-field-model=\"replaceAll\"\n                  model=\"$$value$$\"\n                  description=\"form.description\"></form-ui-select>\n</div>\n");}]);
+angular.module("sfObibaUiSelectTemplates", []).run(["$templateCache", function($templateCache) {$templateCache.put("src/templates/sf-obiba-ui-select.html","<div ng-controller=\"sfObibaUiSelectController\" schema-validate=\"form\" sf-field-model>\n  <form-ui-select title=\"form.title\"\n                  show-title=\"!form.notitle\"\n                  items=\"form.items\"\n                  auto-complete=\"form.autoComplete\"\n                  sf-field-model=\"replaceAll\"\n                  model=\"$$value$$\"\n                  multiple=\"form.multiple\"\n                  description=\"form.description\"></form-ui-select>\n</div>\n");}]);
 angular.module('sfObibaUiSelect', [
   'schemaForm',
   'ui.select',
@@ -31,8 +31,6 @@ angular.module('sfObibaUiSelect', [
     $scope.$watch('ngModel.$modelValue', function () {
       if ($scope.ngModel.$validate) {
         // Make sure that allowInvalid is always true so that the model is preserved when validation fails
-        $scope.ngModel.$options = $scope.ngModel.$options || {};
-        $scope.ngModel.$options = {allowInvalid: true};
         $scope.ngModel.$validate();
         if ($scope.ngModel.$invalid) { // The field must be made dirty so the error message is displayed
           $scope.ngModel.$dirty = true;
